@@ -119,3 +119,55 @@ footer {
 
   color: #666;
 }
+
+.course-details {
+  max-width: 1200px;
+
+  margin: auto;
+
+  padding: 4rem;
+
+  display: flex;
+
+  gap: 3rem;
+}
+
+.course-thumbnail {
+  width: 500px;
+
+  border-radius: 24px;
+
+  object-fit: cover;
+}
+
+.course-info {
+  flex: 1;
+}
+
+.course-info h1 {
+  margin-bottom: 1rem;
+}
+
+.course-info p {
+  margin-bottom: 1rem;
+}
+
+.course-info button {
+  border: none;
+
+  padding: 14px 24px;
+
+  border-radius: 12px;
+
+  background: black;
+
+  color: white;
+
+  cursor: pointer;
+
+  margin: 1rem 0;
+}
+
+.course-info ul {
+  padding-left: 1rem;
+}

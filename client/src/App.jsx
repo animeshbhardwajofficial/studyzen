@@ -6,6 +6,7 @@ import Courses from "./pages/Courses";
 import CourseDetails from "./pages/CourseDetails";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
 
 import Navbar from "./components/Navbar";
 
@@ -14,15 +15,19 @@ function App() {
     <>
       <Navbar />
 
-    <Routes>
+      <Routes>
 
-      
-      <Route path="/" element={<Home />} />
-      <Route path="/courses" element={<Courses />} />
-      <Route path="/course/:id" element={<CourseDetails />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-    </Routes>
+
+        <Route path="/" element={<Home />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/course/:id" element={<CourseDetails />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
+      </Routes>
     </>
   );
 }

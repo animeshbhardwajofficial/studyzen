@@ -44,6 +44,15 @@ function Navbar() {
             >
                 Signup
             </NavLink>
+
+            <NavLink
+                to="/dashboard"
+                style={({ isActive }) => ({
+                    color: isActive ? "black" : "#666",
+                })}
+            >
+                Dashboard
+            </NavLink>
         </nav>
     );
 }

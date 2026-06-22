@@ -13,27 +13,53 @@ function CourseDetails() {
     }
 
     return (
-        <div>
-            <h1>{course.title}</h1>
+        <section className="course-details">
+            <img
+                src={course.thumbnail}
+                alt={course.title}
+                className="course-thumbnail"
+            />
 
-            <p>By {course.instructor}</p>
+            <div className="course-info">
+                <h1>{course.title}</h1>
 
-            <p>⭐ {course.rating}</p>
+                <p>
+                    By {course.instructor}
+                </p>
 
-            <p>₹{course.price}</p>
+                <p>
+                    ⭐ {course.rating}
+                </p>
 
-            <p>{course.description}</p>
+                <p>
+                    👨‍🎓 {course.students} Students
+                </p>
 
-            <h2>Curriculum</h2>
+                <p>
+                    ⏱ {course.duration}
+                </p>
 
-            <ul>
-                {course.curriculum.map((item, index) => (
-                    <li key={index}>{item}</li>
-                ))}
-            </ul>
+                <p>
+                    {course.description}
+                </p>
 
-            <button>Enroll Now</button>
-        </div>
+                <button>
+                    Enroll Now
+                </button>
+
+                <h2>Curriculum</h2>
+
+                <ul>
+                    {course.curriculum && course.curriculum.map(
+                        (item, index) => (
+                            <li key={index}>
+                                {item}
+                            </li>
+                        )
+                    )}
+                </ul>
+            </div>
+        </section>
     );
 }
 
