@@ -1,7 +1,17 @@
 import { useParams } from "react-router-dom";
 import courses from "../data/courses";
 
+import { useContext } from "react";
+import {
+    EnrollmentContext,
+} from "../context/EnrollmentContext";
+
 function CourseDetails() {
+
+    const { enrollCourse } =
+        useContext(EnrollmentContext);
+
+
     const { id } = useParams();
 
     const course = courses.find(
@@ -43,7 +53,9 @@ function CourseDetails() {
                     {course.description}
                 </p>
 
-                <button>
+                <button
+                    onClick={() => enrollCourse(course)}
+                >
                     Enroll Now
                 </button>
 
