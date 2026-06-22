@@ -6,16 +6,18 @@ function CourseGrid() {
         <section>
             <h2>Featured Courses</h2>
 
-            {courses.map((course) => (
-                <CourseCard
-                    key={course.id}
-                    id={course.id}
-                    title={course.title}
-                    instructor={course.instructor}
-                    price={course.price}
-                    rating={course.rating}
-                />
-            ))}
+            <div className="course-grid">
+                {courses.map((course) => (
+                    <CourseCard
+                        key={course.id}
+                        id={course.id}
+                        title={course.title}
+                        instructor={course.instructor}
+                        price={course.price}
+                        rating={course.rating}
+                    />
+                ))}
+            </div>
         </section>
     );
 }

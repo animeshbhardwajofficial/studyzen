@@ -4,47 +4,118 @@
   box-sizing: border-box;
 }
 
-.course-card {
-  border: 1px solid #ccc;
-  padding: 16px;
-  margin: 16px;
-  border-radius: 10px;
-  width: 250px;
-}
-
-.course-card button {
-  margin-top: 10px;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
 body {
   background: #f5f5f7;
+  color: #1d1d1f;
+  font-family: Inter, Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+
+  padding: 1rem;
+
+  backdrop-filter: blur(20px);
+
+  background: rgba(255, 255, 255, 0.6);
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .hero {
   text-align: center;
-  padding: 80px 20px;
+  padding: 8rem 2rem;
 }
 
 .hero h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  font-size: 4rem;
+  margin-bottom: 1rem;
 }
 
 .hero p {
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  color: #666;
+  margin-bottom: 2rem;
 }
 
 .hero button {
-  padding: 12px 20px;
   border: none;
-  border-radius: 10px;
+  border-radius: 999px;
+
+  padding: 14px 24px;
+
+  background: black;
+  color: white;
+
+  cursor: pointer;
+}
+
+.course-grid {
+  display: flex;
+  flex-wrap: wrap;
+
+  justify-content: center;
+
+  gap: 2rem;
+
+  padding: 4rem;
+}
+
+.course-card {
+  width: 320px;
+
+  padding: 1.5rem;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.05);
+
+  transition: 0.3s;
+}
+
+.course-card:hover {
+  transform: translateY(-6px);
+}
+
+.course-card h2 {
+  margin-bottom: 0.75rem;
+}
+
+.course-card button {
+  margin-top: 1rem;
+
+  border: none;
+
+  padding: 12px 18px;
+
+  border-radius: 12px;
+
+  background: black;
+
+  color: white;
+
   cursor: pointer;
 }
 
 footer {
   text-align: center;
-  padding: 40px;
+
+  padding: 4rem;
+
+  color: #666;
 }
