@@ -296,3 +296,23 @@ input {
 .course-info button {
   margin-right: 1rem;
 }
+
+.dashboard {
+  max-width: 1200px;
+
+  margin: auto;
+
+  padding: 4rem 2rem;
+}
+
+.dashboard h1 {
+  margin-bottom: 2rem;
+}
+
+.dashboard .course-card {
+  margin-bottom: 2rem;
+}
+
+.dashboard button {
+  margin-right: 1rem;
+}

@@ -1,10 +1,13 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
     EnrollmentContext,
 } from "../context/EnrollmentContext";
 
 function Dashboard() {
+    const navigate = useNavigate();
+
     const {
         enrolledCourses,
         updateProgress,
@@ -13,14 +16,12 @@ function Dashboard() {
     );
 
     return (
-        <div>
-            <h1>
-                My Dashboard
-            </h1>
+        <div className="dashboard">
+            <h1>My Learning Dashboard</h1>
 
             {enrolledCourses.length === 0 ? (
                 <p>
-                    No enrolled courses.
+                    No enrolled courses yet.
                 </p>
             ) : (
                 enrolledCourses.map(
@@ -34,7 +35,12 @@ function Dashboard() {
                             </h2>
 
                             <p>
+                                By {course.instructor}
+                            </p>
+
+                            <p>
                                 Progress:
+                                {" "}
                                 {course.progress}%
                             </p>
 
@@ -52,6 +58,35 @@ function Dashboard() {
                                     )
                                 }
                             />
+
+                            <br />
+
+                            <button
+                                onClick={() =>
+                                    navigate(
+                                        `/course/${course.id}`
+                                    )
+                                }
+                            >
+                                View Course
+                            </button>
+
+                            <button
+                                onClick={() =>
+                                    navigate(
+                                        `/course/${course.id}/lesson/1`
+                                    )
+                                }
+                            >
+                                Continue Learning
+                            </button>
+
+                            {course.progress ===
+                                100 && (
+                                    <p>
+                                        ✅ Completed
+                                    </p>
+                                )}
                         </div>
                     )
                 )
