@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import courses from "../data/courses";
@@ -6,7 +7,8 @@ function Lesson() {
     const { courseId, lessonId } = useParams();
 
     const course = courses.find(
-        (course) => course.id === Number(courseId)
+        (course) =>
+            course.id === Number(courseId)
     );
 
     if (!course) {
@@ -14,12 +16,32 @@ function Lesson() {
     }
 
     const lesson = course.lessons.find(
-        (lesson) => lesson.id === Number(lessonId)
+        (lesson) =>
+            lesson.id === Number(lessonId)
     );
 
     if (!lesson) {
         return <h1>Lesson Not Found</h1>;
     }
+
+    const storageKey =
+        `notes-${courseId}-${lessonId}`;
+
+    const [notes, setNotes] =
+        useState(() => {
+            return (
+                localStorage.getItem(
+                    storageKey
+                ) || ""
+            );
+        });
+
+    useEffect(() => {
+        localStorage.setItem(
+            storageKey,
+            notes
+        );
+    }, [notes, storageKey]);
 
     return (
         <div className="lesson-page">
@@ -36,9 +58,15 @@ function Lesson() {
             </div>
 
             <div className="lesson-notes">
-                <h2>Lesson Notes</h2>
+                <h2>My Notes</h2>
 
                 <textarea
+                    value={notes}
+                    onChange={(e) =>
+                        setNotes(
+                            e.target.value
+                        )
+                    }
                     placeholder="Write your notes here..."
                     rows="10"
                 ></textarea>
