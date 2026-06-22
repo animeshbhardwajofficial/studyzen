@@ -171,3 +171,47 @@ footer {
 .course-info ul {
   padding-left: 1rem;
 }
+
+input {
+  display: block;
+
+  width: 400px;
+
+  margin: 2rem auto;
+
+  padding: 14px 18px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 14px;
+
+  font-size: 1rem;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  backdrop-filter: blur(20px);
+}
+
+.category-filter {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 1rem;
+
+  margin-bottom: 2rem;
+}
+
+.category-filter button {
+  border: none;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  background: white;
+}
