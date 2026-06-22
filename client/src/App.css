@@ -215,3 +215,84 @@ input {
 
   background: white;
 }
+
+.lesson-page {
+  max-width: 1000px;
+
+  margin: auto;
+
+  padding: 4rem 2rem;
+}
+
+.lesson-page h1 {
+  margin-bottom: 2rem;
+}
+
+.video-container {
+  overflow: hidden;
+
+  border-radius: 24px;
+
+  margin-bottom: 2rem;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.lesson-notes {
+  margin-top: 2rem;
+}
+
+.lesson-notes textarea {
+  width: 100%;
+
+  padding: 1rem;
+
+  border-radius: 16px;
+
+  border: 1px solid #ddd;
+
+  resize: vertical;
+
+  font-size: 1rem;
+}
+
+.lesson-page button {
+  border: none;
+
+  padding: 14px 24px;
+
+  border-radius: 12px;
+
+  background: black;
+
+  color: white;
+
+  cursor: pointer;
+
+  margin-top: 1rem;
+}
+
+.course-info ul {
+  margin-top: 1rem;
+}
+
+.course-info li {
+  padding: 0.75rem;
+
+  margin-bottom: 0.5rem;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  transition: 0.2s;
+}
+
+.course-info li:hover {
+  transform: translateX(6px);
+}
+
+.course-info button {
+  margin-right: 1rem;
+}
