@@ -1,18 +1,19 @@
-import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
 import courses from "../data/courses";
 
-import { useContext } from "react";
 import {
     EnrollmentContext,
 } from "../context/EnrollmentContext";
 
 function CourseDetails() {
+    const { id } = useParams();
+
+    const navigate = useNavigate();
 
     const { enrollCourse } =
         useContext(EnrollmentContext);
-
-
-    const { id } = useParams();
 
     const course = courses.find(
         (course) => course.id === Number(id)
@@ -50,22 +51,50 @@ function CourseDetails() {
                 </p>
 
                 <p>
+                    📚 {course.lessons.length} Lessons
+                </p>
+
+                <p>
                     {course.description}
                 </p>
 
                 <button
-                    onClick={() => enrollCourse(course)}
+                    onClick={() =>
+                        enrollCourse(course)
+                    }
                 >
                     Enroll Now
                 </button>
 
-                <h2>Curriculum</h2>
+                <button
+                    onClick={() =>
+                        navigate(
+                            `/course/${course.id}/lesson/1`
+                        )
+                    }
+                >
+                    Continue Learning
+                </button>
+
+                <h2>
+                    Curriculum
+                </h2>
 
                 <ul>
-                    {course.curriculum && course.curriculum.map(
-                        (item, index) => (
-                            <li key={index}>
-                                {item}
+                    {course.lessons.map(
+                        (lesson) => (
+                            <li
+                                key={lesson.id}
+                                style={{
+                                    cursor: "pointer",
+                                }}
+                                onClick={() =>
+                                    navigate(
+                                        `/course/${course.id}/lesson/${lesson.id}`
+                                    )
+                                }
+                            >
+                                {lesson.title}
                             </li>
                         )
                     )}
