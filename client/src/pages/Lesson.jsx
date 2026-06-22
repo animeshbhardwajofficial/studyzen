@@ -1,10 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import courses from "../data/courses";
 
+import {
+    EnrollmentContext,
+} from "../context/EnrollmentContext";
+
 function Lesson() {
     const { courseId, lessonId } = useParams();
+
+    const {
+        completeLesson,
+        enrolledCourses,
+    } = useContext(
+        EnrollmentContext
+    );
 
     const course = courses.find(
         (course) =>
@@ -43,6 +54,17 @@ function Lesson() {
         );
     }, [notes, storageKey]);
 
+    const enrolledCourse =
+        enrolledCourses.find(
+            (course) =>
+                course.id === Number(courseId)
+        );
+
+    const isCompleted =
+        enrolledCourse?.completedLessons?.includes(
+            Number(lessonId)
+        );
+
     return (
         <div className="lesson-page">
             <h1>{lesson.title}</h1>
@@ -72,9 +94,22 @@ function Lesson() {
                 ></textarea>
             </div>
 
-            <button>
+            <button
+                onClick={() =>
+                    completeLesson(
+                        Number(courseId),
+                        Number(lessonId)
+                    )
+                }
+            >
                 Mark Complete
             </button>
+
+            {isCompleted && (
+                <p>
+                    ✅ Lesson Completed
+                </p>
+            )}
         </div>
     );
 }
