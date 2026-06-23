@@ -6,45 +6,67 @@ function CourseCard({
     instructor,
     price,
     rating,
+    thumbnail,
+    students,
+    duration,
+    category,
 }) {
     const navigate = useNavigate();
 
     return (
         <div className="course-card">
-            <h2>{title}</h2>
+            <img
+                src={thumbnail}
+                alt={title}
+                className="course-card-image"
+            />
 
-            <p>
-                By {instructor}
-            </p>
+            <div className="course-card-content">
+                <span className="course-category">
+                    {category}
+                </span>
 
-            <p>
-                ⭐ {rating}
-            </p>
+                <h2>{title}</h2>
 
-            <p>
-                ₹{price}
-            </p>
+                <p>
+                    By {instructor}
+                </p>
 
-            <div className="course-card-actions">
-                <button
-                    onClick={() =>
-                        navigate(
-                            `/course/${id}`
-                        )
-                    }
-                >
-                    View Details
-                </button>
+                <p>
+                    ⭐ {rating}
+                </p>
 
-                <button
-                    onClick={() =>
-                        navigate(
-                            `/course/${id}/lesson/1`
-                        )
-                    }
-                >
-                    Start Learning
-                </button>
+                <p>
+                    👨‍🎓 {students}
+                </p>
+
+                <p>
+                    ⏱ {duration}
+                </p>
+
+                <p className="course-price">
+                    ₹{price}
+                </p>
+
+                <div className="course-card-actions">
+                    <button
+                        onClick={() =>
+                            navigate(`/course/${id}`)
+                        }
+                    >
+                        View Details
+                    </button>
+
+                    <button
+                        onClick={() =>
+                            navigate(
+                                `/course/${id}/lesson/1`
+                            )
+                        }
+                    >
+                        Start Learning
+                    </button>
+                </div>
             </div>
         </div>
     );
