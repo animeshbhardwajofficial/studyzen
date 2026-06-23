@@ -3,53 +3,59 @@ import { NavLink } from "react-router-dom";
 function Navbar() {
     return (
         <nav>
-            <NavLink
-                to="/"
-                style={({ isActive }) => ({
-                    color: isActive ? "blue" : "black",
-                })}
-            >
-                Home
-            </NavLink>
+            <div className="nav-logo">
+                StudyZen
+            </div>
 
-            {" | "}
+            <div className="nav-links">
+                <NavLink
+                    to="/"
+                    style={({ isActive }) => ({
+                        color: isActive
+                            ? "#0071e3"
+                            : "#1d1d1f",
+                    })}
+                >
+                    Home
+                </NavLink>
 
-            <NavLink
-                to="/courses"
-                style={({ isActive }) => ({
-                    color: isActive ? "blue" : "black",
-                })}
-            >
-                Courses
-            </NavLink>
+                <NavLink
+                    to="/courses"
+                    style={({ isActive }) => ({
+                        color: isActive
+                            ? "#0071e3"
+                            : "#1d1d1f",
+                    })}
+                >
+                    Courses
+                </NavLink>
 
-            {" | "}
+                <NavLink
+                    to="/login"
+                    style={({ isActive }) => ({
+                        color: isActive
+                            ? "#0071e3"
+                            : "#1d1d1f",
+                    })}
+                >
+                    Login
+                </NavLink>
 
-            <NavLink
-                to="/login"
-                style={({ isActive }) => ({
-                    color: isActive ? "blue" : "black",
-                })}
-            >
-                Login
-            </NavLink>
-
-            {" | "}
-
-            <NavLink
-                to="/signup"
-                style={({ isActive }) => ({
-                    color: isActive ? "blue" : "black",
-                })}
-            >
-                Signup
-            </NavLink>
+                <NavLink
+                    to="/signup"
+                    style={({ isActive }) => ({
+                        color: isActive
+                            ? "#0071e3"
+                            : "#1d1d1f",
+                    })}
+                >
+                    Signup
+                </NavLink>
+            </div>
 
             <NavLink
                 to="/dashboard"
-                style={({ isActive }) => ({
-                    color: isActive ? "black" : "#666",
-                })}
+                className="dashboard-btn"
             >
                 Dashboard
             </NavLink>

@@ -23,6 +23,8 @@ nav {
   justify-content: center;
   gap: 2rem;
 
+  z-index: 1000;
+
   padding: 1rem;
 
   backdrop-filter: blur(20px);
@@ -315,4 +317,45 @@ input {
 
 .dashboard button {
   margin-right: 1rem;
+}
+
+.course-card-actions {
+  display: flex;
+
+  gap: 0.75rem;
+
+  margin-top: 1rem;
+}
+
+.course-card-actions button {
+  flex: 1;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+
+  color: #1d1d1f;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.dashboard-btn {
+  background: black;
+
+  color: white !important;
+
+  padding: 10px 18px;
+
+  border-radius: 999px;
+
+  transition: 0.3s;
+}
+
+.dashboard-btn:hover {
+  transform: translateY(-2px);
 }

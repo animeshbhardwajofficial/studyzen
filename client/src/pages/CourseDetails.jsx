@@ -12,16 +12,28 @@ function CourseDetails() {
 
     const navigate = useNavigate();
 
-    const { enrollCourse } =
-        useContext(EnrollmentContext);
+    const {
+        enrollCourse,
+        enrolledCourses,
+    } = useContext(
+        EnrollmentContext
+    );
 
     const course = courses.find(
-        (course) => course.id === Number(id)
+        (course) =>
+            course.id === Number(id)
     );
 
     if (!course) {
         return <h1>Course Not Found</h1>;
     }
+
+    const isEnrolled =
+        enrolledCourses.some(
+            (enrolledCourse) =>
+                enrolledCourse.id ===
+                course.id
+        );
 
     return (
         <section className="course-details">
@@ -43,7 +55,9 @@ function CourseDetails() {
                 </p>
 
                 <p>
-                    👨‍🎓 {course.students} Students
+                    👨‍🎓 {course.students}
+                    {" "}
+                    Students
                 </p>
 
                 <p>
@@ -51,20 +65,32 @@ function CourseDetails() {
                 </p>
 
                 <p>
-                    📚 {course.lessons.length} Lessons
+                    📚
+                    {" "}
+                    {
+                        course.lessons.length
+                    }
+                    {" "}
+                    Lessons
                 </p>
 
                 <p>
                     {course.description}
                 </p>
 
-                <button
-                    onClick={() =>
-                        enrollCourse(course)
-                    }
-                >
-                    Enroll Now
-                </button>
+                {!isEnrolled ? (
+                    <button
+                        onClick={() =>
+                            enrollCourse(course)
+                        }
+                    >
+                        Enroll Now
+                    </button>
+                ) : (
+                    <button disabled>
+                        ✅ Enrolled
+                    </button>
+                )}
 
                 <button
                     onClick={() =>
@@ -76,23 +102,22 @@ function CourseDetails() {
                     Continue Learning
                 </button>
 
-                <h2>
-                    Curriculum
-                </h2>
+                <h2>Curriculum</h2>
 
                 <ul>
                     {course.lessons.map(
                         (lesson) => (
                             <li
                                 key={lesson.id}
-                                style={{
-                                    cursor: "pointer",
-                                }}
                                 onClick={() =>
                                     navigate(
                                         `/course/${course.id}/lesson/${lesson.id}`
                                     )
                                 }
+                                style={{
+                                    cursor:
+                                        "pointer",
+                                }}
                             >
                                 {lesson.title}
                             </li>
