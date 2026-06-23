@@ -3,6 +3,7 @@ const express =
 
 const {
     getCourses,
+    getCourseById,
 } = require(
     "../controllers/courseController"
 );
@@ -13,6 +14,11 @@ const router =
 router.get(
     "/",
     getCourses
+);
+
+router.get(
+    "/:id",
+    getCourseById
 );
 
 module.exports = router;
