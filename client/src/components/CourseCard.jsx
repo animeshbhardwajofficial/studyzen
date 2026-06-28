@@ -1,5 +1,16 @@
 import { useNavigate } from "react-router-dom";
 
+import {
+    Star,
+    Users,
+    Clock,
+} from "lucide-react";
+
+import Card from "./ui/Card";
+import Button from "./ui/Button";
+
+import "./CourseCard.css";
+
 function CourseCard({
     id,
     title,
@@ -11,10 +22,12 @@ function CourseCard({
     duration,
     category,
 }) {
-    const navigate = useNavigate();
+    const navigate =
+        useNavigate();
 
     return (
-        <div className="course-card">
+        <Card className="course-card">
+
             <img
                 src={thumbnail}
                 alt={title}
@@ -22,53 +35,81 @@ function CourseCard({
             />
 
             <div className="course-card-content">
+
                 <span className="course-category">
                     {category}
                 </span>
 
-                <h2>{title}</h2>
+                <h3>{title}</h3>
 
-                <p>
-                    By {instructor}
+                <p className="course-instructor">
+                    {instructor}
                 </p>
 
-                <p>
-                    ⭐ {rating}
-                </p>
+                <div className="course-meta">
 
-                <p>
-                    👨‍🎓 {students}
-                </p>
+                    <span>
+                        <Star
+                            size={16}
+                            fill="currentColor"
+                        />
+                        {rating}
+                    </span>
 
-                <p>
-                    ⏱ {duration}
-                </p>
+                    <span>
+                        <Users
+                            size={16}
+                        />
+                        {students}
+                    </span>
 
-                <p className="course-price">
-                    ₹{price}
-                </p>
+                    <span>
+                        <Clock
+                            size={16}
+                        />
+                        {duration}
+                    </span>
 
-                <div className="course-card-actions">
-                    <button
-                        onClick={() =>
-                            navigate(`/course/${id}`)
-                        }
-                    >
-                        View Details
-                    </button>
-
-                    <button
-                        onClick={() =>
-                            navigate(
-                                `/course/${id}/lesson/1`
-                            )
-                        }
-                    >
-                        Start Learning
-                    </button>
                 </div>
+
+                <div className="course-footer">
+
+                    <h3 className="course-price">
+                        ₹{price}
+                    </h3>
+
+                    <div className="course-actions">
+
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={() =>
+                                navigate(
+                                    `/course/${id}`
+                                )
+                            }
+                        >
+                            Details
+                        </Button>
+
+                        <Button
+                            size="sm"
+                            onClick={() =>
+                                navigate(
+                                    `/course/${id}/lesson/1`
+                                )
+                            }
+                        >
+                            Learn
+                        </Button>
+
+                    </div>
+
+                </div>
+
             </div>
-        </div>
+
+        </Card>
     );
 }
 

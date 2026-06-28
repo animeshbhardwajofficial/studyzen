@@ -4,14 +4,21 @@ import {
 } from "react";
 
 import {
+    Link,
     useNavigate,
 } from "react-router-dom";
 
-import axios from "axios";
+import {
+    login as loginApi,
+} from "../api/authApi";
 
 import {
     AuthContext,
 } from "../context/AuthContext";
+
+import Card from "../components/ui/Card";
+import Input from "../components/ui/Input";
+import Button from "../components/ui/Button";
 
 function Login() {
     const navigate =
@@ -36,86 +43,132 @@ function Login() {
         setLoading,
     ] = useState(false);
 
-    const handleSubmit =
-        async (e) => {
-            e.preventDefault();
+    async function handleSubmit(
+        e
+    ) {
+        e.preventDefault();
 
-            try {
-                setLoading(true);
+        if (
+            !email ||
+            !password
+        ) {
+            alert(
+                "Please fill all fields."
+            );
+            return;
+        }
 
-                const response =
-                    await axios.post(
-                        "http://localhost:5000/api/auth/login",
-                        {
-                            email,
-                            password,
-                        }
-                    );
+        try {
+            setLoading(true);
 
-                login(
-                    response.data.user,
-                    response.data.token
-                );
+            const response =
+                await loginApi({
+                    email,
+                    password,
+                });
 
-                alert(
-                    "Login Successful"
-                );
+            login(
+                response.user,
+                response.token
+            );
 
-                navigate(
-                    "/dashboard"
-                );
-            } catch (error) {
-                alert(
-                    error.response?.data
-                        ?.message ||
-                    "Login Failed"
-                );
-            } finally {
-                setLoading(false);
-            }
-        };
+            alert(
+                "Login Successful"
+            );
+
+            navigate(
+                "/dashboard"
+            );
+        } catch (error) {
+            alert(
+                error.response?.data
+                    ?.message ||
+                "Login Failed"
+            );
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
-        <div>
-            <h1>Login</h1>
-
-            <form
-                onSubmit={
-                    handleSubmit
-                }
+        <main className="auth-page">
+            <Card
+                hover={false}
+                className="auth-card"
             >
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(
-                            e.target.value
-                        )
-                    }
-                />
+                <h1>
+                    Welcome Back
+                </h1>
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(
-                            e.target.value
-                        )
-                    }
-                />
+                <p>
+                    Continue your
+                    learning journey.
+                </p>
 
-                <button
-                    type="submit"
-                    disabled={loading}
+                <form
+                    onSubmit={
+                        handleSubmit
+                    }
                 >
-                    {loading
-                        ? "Logging in..."
-                        : "Login"}
-                </button>
-            </form>
-        </div>
+                    <Input
+                        label="Email"
+                        type="email"
+                        placeholder="john@example.com"
+                        value={email}
+                        onChange={(e) =>
+                            setEmail(
+                                e.target
+                                    .value
+                            )
+                        }
+                    />
+
+                    <Input
+                        label="Password"
+                        type="password"
+                        placeholder="••••••••"
+                        value={
+                            password
+                        }
+                        onChange={(e) =>
+                            setPassword(
+                                e.target
+                                    .value
+                            )
+                        }
+                    />
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        disabled={
+                            loading
+                        }
+                    >
+                        {loading
+                            ? "Logging in..."
+                            : "Login"}
+                    </Button>
+                </form>
+
+                <p
+                    style={{
+                        marginTop:
+                            "24px",
+                        textAlign:
+                            "center",
+                    }}
+                >
+                    Don't have an
+                    account?{" "}
+                    <Link
+                        to="/signup"
+                    >
+                        Create one
+                    </Link>
+                </p>
+            </Card>
+        </main>
     );
 }
 

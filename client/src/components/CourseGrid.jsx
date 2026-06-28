@@ -3,11 +3,13 @@ import {
     useState,
 } from "react";
 
-import CourseCard from "./CourseCard";
-
 import {
     getCourses,
 } from "../api/courseApi";
+
+import CourseCard from "./CourseCard";
+
+import "./CourseGrid.css";
 
 function CourseGrid() {
     const [courses, setCourses] =
@@ -37,53 +39,52 @@ function CourseGrid() {
         fetchCourses();
     }, []);
 
-    if (loading) {
-        return (
-            <h2>
-                Loading
-                courses...
-            </h2>
-        );
-    }
-
     return (
-        <section className="course-grid">
-            {courses.map(
-                (course) => (
-                    <CourseCard
-                        key={
-                            course.id
-                        }
-                        id={
-                            course.id
-                        }
-                        title={
-                            course.title
-                        }
-                        instructor={
-                            course.instructor
-                        }
-                        price={
-                            course.price
-                        }
-                        rating={
-                            course.rating
-                        }
-                        thumbnail={
-                            course.thumbnail
-                        }
-                        students={
-                            course.students
-                        }
-                        duration={
-                            course.duration
-                        }
-                        category={
-                            course.category
-                        }
-                    />
-                )
-            )}
+        <section className="courses-section">
+
+            <div className="container">
+
+                <div className="section-header">
+
+                    <h2>
+                        Featured Courses
+                    </h2>
+
+                    <p>
+                        Learn from
+                        industry experts
+                        with beautifully
+                        crafted courses.
+                    </p>
+
+                </div>
+
+                {loading ? (
+                    <h3>
+                        Loading
+                        courses...
+                    </h3>
+                ) : (
+                    <div className="course-grid">
+
+                        {courses.map(
+                            (
+                                course
+                            ) => (
+                                <CourseCard
+                                    key={
+                                        course.id
+                                    }
+                                    {...course}
+                                />
+                            )
+                        )}
+
+                    </div>
+                )}
+
+            </div>
+
         </section>
     );
 }

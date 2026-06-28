@@ -1,0 +1,104 @@
+/*======================================
+=              CSS Reset               =
+======================================*/
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    text-rendering: optimizeLegibility;
+
+    -webkit-font-smoothing: antialiased;
+
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+    display: block;
+
+    max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+
+    color: inherit;
+}
+
+button {
+    background: none;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+input,
+textarea,
+select {
+    outline: none;
+
+    border: none;
+
+    background: transparent;
+}
+
+textarea {
+    resize: vertical;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+
+    color: inherit;
+}
+
+table {
+    border-collapse: collapse;
+
+    border-spacing: 0;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+
+    outline-offset: 3px;
+
+    border-radius: 8px;
+}
+
+::selection {
+    background:
+        rgba(0,
+            113,
+            227,
+            0.18);
+
+    color:
+        var(--color-text);
+}

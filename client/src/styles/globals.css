@@ -1,0 +1,204 @@
+@import "./variables.css";
+@import "./reset.css";
+@import "./auth.css";
+
+/*======================================
+=             Global Styles            =
+======================================*/
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family:
+        var(--font-family);
+
+    font-size:
+        var(--font-size-md);
+
+    font-weight:
+        var(--font-weight-regular);
+
+    line-height: 1.6;
+
+    background:
+        var(--color-background);
+
+    color:
+        var(--color-text);
+
+    overflow-x: hidden;
+}
+
+/*======================================
+=              Typography              =
+======================================*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight:
+        var(--font-weight-bold);
+
+    line-height: 1.15;
+
+    letter-spacing: -0.03em;
+
+    color:
+        var(--color-text);
+}
+
+h1 {
+    font-size:
+        var(--font-size-4xl);
+}
+
+h2 {
+    font-size:
+        var(--font-size-3xl);
+}
+
+h3 {
+    font-size:
+        var(--font-size-2xl);
+}
+
+h4 {
+    font-size:
+        var(--font-size-xl);
+}
+
+h5 {
+    font-size:
+        var(--font-size-lg);
+}
+
+h6 {
+    font-size:
+        var(--font-size-md);
+}
+
+p {
+    color:
+        var(--color-text-secondary);
+
+    line-height: 1.8;
+
+    font-size:
+        var(--font-size-md);
+}
+
+/*======================================
+=              Layout                  =
+======================================*/
+
+.container {
+    width: min(100% - 48px,
+            var(--container-width));
+
+    margin-inline: auto;
+}
+
+section {
+    padding-block:
+        var(--space-8);
+}
+
+/*======================================
+=               Buttons                =
+======================================*/
+
+button {
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        opacity var(--transition-fast);
+}
+
+button:hover {
+    transform:
+        translateY(-1px);
+}
+
+button:active {
+    transform:
+        scale(.98);
+}
+
+/*======================================
+=                Forms                 =
+======================================*/
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    border-radius:
+        var(--radius-md);
+
+    border:
+        1px solid var(--color-border);
+
+    background:
+        var(--color-surface);
+
+    padding:
+        var(--space-4) var(--space-5);
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color:
+        var(--color-primary);
+
+    box-shadow:
+        0 0 0 4px rgba(0, 113, 227, .12);
+}
+
+/*======================================
+=              Scrollbar               =
+======================================*/
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background:
+        transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background:
+        rgba(0, 0, 0, .15);
+
+    border-radius:
+        var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background:
+        rgba(0, 0, 0, .3);
+}
+
+/*======================================
+=             Animations               =
+======================================*/
+
+* {
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast);
+}

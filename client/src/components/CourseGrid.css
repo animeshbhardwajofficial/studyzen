@@ -1,0 +1,56 @@
+.courses-section {
+
+    padding:
+        var(--space-9) 0;
+
+}
+
+.section-header {
+
+    text-align: center;
+
+    margin-bottom:
+        var(--space-8);
+
+}
+
+.section-header h2 {
+
+    margin-bottom:
+        var(--space-3);
+
+}
+
+.section-header p {
+
+    max-width: 650px;
+
+    margin: auto;
+
+}
+
+.course-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit,
+            minmax(340px,
+                1fr));
+
+    gap:
+        var(--space-6);
+
+    align-items: stretch;
+
+}
+
+@media (max-width:768px) {
+
+    .course-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}

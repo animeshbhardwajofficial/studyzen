@@ -1,4 +1,7 @@
-import { useContext } from "react";
+import {
+    useContext,
+} from "react";
+
 import {
     NavLink,
     useNavigate,
@@ -7,6 +10,8 @@ import {
 import {
     AuthContext,
 } from "../context/AuthContext";
+
+import "./Navbar.css";
 
 function Navbar() {
     const navigate =
@@ -26,90 +31,78 @@ function Navbar() {
     }
 
     return (
-        <nav>
-            <div className="nav-logo">
-                StudyZen
-            </div>
+        <header className="navbar-wrapper">
+            <nav className="navbar container">
 
-            <div className="nav-links">
                 <NavLink
                     to="/"
-                    style={({ isActive }) => ({
-                        color: isActive
-                            ? "#0071e3"
-                            : "#1d1d1f",
-                    })}
+                    className="navbar-logo"
                 >
-                    Home
+                    StudyZen
                 </NavLink>
 
-                <NavLink
-                    to="/courses"
-                    style={({ isActive }) => ({
-                        color: isActive
-                            ? "#0071e3"
-                            : "#1d1d1f",
-                    })}
-                >
-                    Courses
-                </NavLink>
+                <div className="navbar-links">
 
-                {!isLoggedIn && (
-                    <>
-                        <NavLink
-                            to="/login"
-                            style={({ isActive }) => ({
-                                color: isActive
-                                    ? "#0071e3"
-                                    : "#1d1d1f",
-                            })}
-                        >
-                            Login
-                        </NavLink>
+                    <NavLink
+                        to="/"
+                        className="nav-link"
+                    >
+                        Home
+                    </NavLink>
 
-                        <NavLink
-                            to="/signup"
-                            style={({ isActive }) => ({
-                                color: isActive
-                                    ? "#0071e3"
-                                    : "#1d1d1f",
-                            })}
-                        >
-                            Signup
-                        </NavLink>
-                    </>
-                )}
-            </div>
+                    <NavLink
+                        to="/courses"
+                        className="nav-link"
+                    >
+                        Courses
+                    </NavLink>
 
-            <div
-                style={{
-                    display: "flex",
-                    gap: "12px",
-                    alignItems:
-                        "center",
-                }}
-            >
-                {isLoggedIn && (
-                    <>
-                        <NavLink
-                            to="/dashboard"
-                            className="dashboard-btn"
-                        >
-                            Dashboard
-                        </NavLink>
+                    {!isLoggedIn && (
+                        <>
+                            <NavLink
+                                to="/login"
+                                className="nav-link"
+                            >
+                                Login
+                            </NavLink>
 
-                        <button
-                            onClick={
-                                handleLogout
-                            }
-                            className="dashboard-btn"
-                        >
-                            Logout
-                        </button>
-                    </>
-                )}
-            </div>
-        </nav>
+                            <NavLink
+                                to="/signup"
+                                className="nav-link"
+                            >
+                                Signup
+                            </NavLink>
+                        </>
+                    )}
+
+                </div>
+
+                <div className="navbar-actions">
+
+                    {isLoggedIn && (
+                        <>
+                            <NavLink
+                                to="/dashboard"
+                                className="dashboard-link"
+                            >
+                                Dashboard
+                            </NavLink>
+
+                            <button
+                                onClick={
+                                    handleLogout
+                                }
+                                className="logout-btn"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    )}
+
+                </div>
+
+            </nav>
+        </header>
     );
 }
 
