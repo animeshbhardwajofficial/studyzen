@@ -1,33 +1,65 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
+  id          Int          @id @default(autoincrement())
+  name        String
+  email       String       @unique
+  password    String
+  createdAt   DateTime     @default(now())
 
-  createdAt DateTime @default(now())
+  enrollments Enrollment[]
 }
 
 model Course {
-  id          Int      @id @default(autoincrement())
-  title       String
-  instructor  String
-  category    String
-  price       Int
-  rating      Float
+  id           Int          @id @default(autoincrement())
+
+  title        String
+  instructor   String
+  category     String
+  price        Int
+  rating       Float
+  thumbnail    String
+  students     Int
+  duration     String
+  description  String
+
+  createdAt    DateTime     @default(now())
+
+  lessons      Lesson[]
+  enrollments  Enrollment[]
+}
+
+model Lesson {
+  id         Int      @id @default(autoincrement())
+
+  title      String
+
+  courseId   Int
+
+  course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime @default(now())
+}
+
+model Enrollment {
+  id         Int      @id @default(autoincrement())
+
+  userId     Int
+
+  courseId   Int
+
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  course      Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   createdAt   DateTime @default(now())
+
+  @@unique([userId, courseId])
 }

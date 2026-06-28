@@ -25,23 +25,22 @@ function CourseDetails() {
     );
 
     useEffect(() => {
-        const fetchCourse =
-            async () => {
-                try {
-                    const response =
-                        await axios.get(
-                            `http://localhost:5000/api/courses/${id}`
-                        );
-
-                    setCourse(
-                        response.data.data
+        async function fetchCourse() {
+            try {
+                const response =
+                    await axios.get(
+                        `http://localhost:5000/api/courses/${id}`
                     );
-                } catch (error) {
-                    console.log(error);
-                } finally {
-                    setLoading(false);
-                }
-            };
+
+                setCourse(
+                    response.data.data
+                );
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        }
 
         fetchCourse();
     }, [id]);
@@ -85,9 +84,7 @@ function CourseDetails() {
                 </p>
 
                 <p>
-                    👨‍🎓 {course.students}
-                    {" "}
-                    Students
+                    👨‍🎓 {course.students} Students
                 </p>
 
                 <p>
@@ -95,13 +92,7 @@ function CourseDetails() {
                 </p>
 
                 <p>
-                    📚
-                    {" "}
-                    {
-                        course.lessons.length
-                    }
-                    {" "}
-                    Lessons
+                    📚 {course.lessons.length} Lessons
                 </p>
 
                 <p>

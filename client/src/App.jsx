@@ -1,5 +1,9 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+
+import {
+  Routes,
+  Route,
+} from "react-router-dom";
 
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
@@ -10,6 +14,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 
 import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -24,39 +29,54 @@ function App() {
 
         <Route
           path="/courses"
-          element={<Courses />}
+          element={
+            <Courses />
+          }
         />
 
         <Route
           path="/course/:id"
-          element={<CourseDetails />}
+          element={
+            <CourseDetails />
+          }
         />
 
         <Route
           path="/course/:courseId/lesson/:lessonId"
-          element={<Lesson />}
+          element={
+            <Lesson />
+          }
         />
 
         <Route
           path="/login"
-          element={<Login />}
+          element={
+            <Login />
+          }
         />
 
         <Route
           path="/signup"
-          element={<Signup />}
+          element={
+            <Signup />
+          }
         />
 
         <Route
           path="/dashboard"
-          element={<Dashboard />}
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="*"
           element={
             <h1>
-              404 - Page Not Found
+              404 - Page
+              Not Found
             </h1>
           }
         />

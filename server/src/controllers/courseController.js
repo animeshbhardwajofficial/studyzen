@@ -1,41 +1,51 @@
-const courses =
-    require("../data/courses");
+const prisma = require("../config/prisma");
 
-exports.getCourses = (
-    req,
-    res
-) => {
-    res.status(200).json({
-        success: true,
-        data: courses,
-    });
+exports.getCourses = async (req, res) => {
+    try {
+        const courses =
+            await prisma.course.findMany();
+
+        res.status(200).json({
+            success: true,
+            data: courses,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch courses",
+        });
+    }
 };
 
-exports.getCourseById = (
-    req,
-    res
-) => {
-    const courseId =
-        Number(req.params.id);
+exports.getCourseById = async (req, res) => {
+    try {
+        const courseId = Number(req.params.id);
 
-    const course =
-        courses.find(
-            (course) =>
-                course.id === courseId
-        );
-
-    if (!course) {
-        return res
-            .status(404)
-            .json({
-                success: false,
-                message:
-                    "Course not found",
+        const course =
+            await prisma.course.findUnique({
+                where: {
+                    id: courseId,
+                },
+                include: {
+                    lessons: true,
+                },
             });
-    }
 
-    res.status(200).json({
-        success: true,
-        data: course,
-    });
+        if (!course) {
+            return res.status(404).json({
+                success: false,
+                message: "Course not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: course,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch course",
+        });
+    }
 };

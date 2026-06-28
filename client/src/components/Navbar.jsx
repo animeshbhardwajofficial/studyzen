@@ -1,6 +1,30 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import {
+    NavLink,
+    useNavigate,
+} from "react-router-dom";
+
+import {
+    AuthContext,
+} from "../context/AuthContext";
 
 function Navbar() {
+    const navigate =
+        useNavigate();
+
+    const {
+        isLoggedIn,
+        logout,
+    } = useContext(
+        AuthContext
+    );
+
+    function handleLogout() {
+        logout();
+
+        navigate("/");
+    }
+
     return (
         <nav>
             <div className="nav-logo">
@@ -30,35 +54,61 @@ function Navbar() {
                     Courses
                 </NavLink>
 
-                <NavLink
-                    to="/login"
-                    style={({ isActive }) => ({
-                        color: isActive
-                            ? "#0071e3"
-                            : "#1d1d1f",
-                    })}
-                >
-                    Login
-                </NavLink>
+                {!isLoggedIn && (
+                    <>
+                        <NavLink
+                            to="/login"
+                            style={({ isActive }) => ({
+                                color: isActive
+                                    ? "#0071e3"
+                                    : "#1d1d1f",
+                            })}
+                        >
+                            Login
+                        </NavLink>
 
-                <NavLink
-                    to="/signup"
-                    style={({ isActive }) => ({
-                        color: isActive
-                            ? "#0071e3"
-                            : "#1d1d1f",
-                    })}
-                >
-                    Signup
-                </NavLink>
+                        <NavLink
+                            to="/signup"
+                            style={({ isActive }) => ({
+                                color: isActive
+                                    ? "#0071e3"
+                                    : "#1d1d1f",
+                            })}
+                        >
+                            Signup
+                        </NavLink>
+                    </>
+                )}
             </div>
 
-            <NavLink
-                to="/dashboard"
-                className="dashboard-btn"
+            <div
+                style={{
+                    display: "flex",
+                    gap: "12px",
+                    alignItems:
+                        "center",
+                }}
             >
-                Dashboard
-            </NavLink>
+                {isLoggedIn && (
+                    <>
+                        <NavLink
+                            to="/dashboard"
+                            className="dashboard-btn"
+                        >
+                            Dashboard
+                        </NavLink>
+
+                        <button
+                            onClick={
+                                handleLogout
+                            }
+                            className="dashboard-btn"
+                        >
+                            Logout
+                        </button>
+                    </>
+                )}
+            </div>
         </nav>
     );
 }

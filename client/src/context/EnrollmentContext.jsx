@@ -4,129 +4,108 @@ import {
     useState,
 } from "react";
 
+import axios from "axios";
+
 export const EnrollmentContext =
     createContext();
 
 function EnrollmentProvider({
     children,
 }) {
-    const [enrolledCourses,
-        setEnrolledCourses] =
-        useState(() => {
-            const savedCourses =
+    const [
+        enrolledCourses,
+        setEnrolledCourses,
+    ] = useState([]);
+
+    async function fetchEnrollments() {
+        try {
+            const token =
                 localStorage.getItem(
-                    "enrolledCourses"
+                    "token"
                 );
 
-            return savedCourses
-                ? JSON.parse(savedCourses)
-                : [];
-        });
+            if (!token) {
+                setEnrolledCourses(
+                    []
+                );
+                return;
+            }
+
+            const response =
+                await axios.get(
+                    "http://localhost:5000/api/enrollments",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+            const courses =
+                response.data.data.map(
+                    (enrollment) =>
+                        enrollment.course
+                );
+
+            setEnrolledCourses(
+                courses
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function enrollCourse(
+        course
+    ) {
+        try {
+            const token =
+                localStorage.getItem(
+                    "token"
+                );
+
+            if (!token) {
+                alert(
+                    "Please login first."
+                );
+                return;
+            }
+
+            await axios.post(
+                "http://localhost:5000/api/enrollments",
+                {
+                    courseId:
+                        course.id,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            await fetchEnrollments();
+        } catch (error) {
+            console.log(error);
+
+            alert(
+                error.response?.data
+                    ?.message ||
+                "Enrollment Failed"
+            );
+        }
+    }
 
     useEffect(() => {
-        localStorage.setItem(
-            "enrolledCourses",
-            JSON.stringify(
-                enrolledCourses
-            )
-        );
-    }, [enrolledCourses]);
-
-    const enrollCourse = (
-        course
-    ) => {
-        setEnrolledCourses(
-            (prev) => {
-                const exists =
-                    prev.find(
-                        (c) =>
-                            c.id === course.id
-                    );
-
-                if (exists)
-                    return prev;
-
-                return [
-                    ...prev,
-                    {
-                        ...course,
-                        progress: 0,
-                        completedLessons: [],
-                    },
-                ];
-            }
-        );
-    };
-
-    const updateProgress = (
-        courseId,
-        value
-    ) => {
-        setEnrolledCourses(
-            (prev) =>
-                prev.map((course) =>
-                    course.id === courseId
-                        ? {
-                            ...course,
-                            progress: value,
-                        }
-                        : course
-                )
-        );
-    };
-
-    const completeLesson = (
-        courseId,
-        lessonId
-    ) => {
-        setEnrolledCourses(
-            (prev) =>
-                prev.map((course) => {
-                    if (
-                        course.id !== courseId
-                    ) {
-                        return course;
-                    }
-
-                    if (
-                        course.completedLessons?.includes(
-                            lessonId
-                        )
-                    ) {
-                        return course;
-                    }
-
-                    const updatedLessons =
-                        [
-                            ...(course.completedLessons ||
-                                []),
-                            lessonId,
-                        ];
-
-                    const progress =
-                        Math.round(
-                            (updatedLessons.length /
-                                course.lessons.length) *
-                            100
-                        );
-
-                    return {
-                        ...course,
-                        completedLessons:
-                            updatedLessons,
-                        progress,
-                    };
-                })
-        );
-    };
+        fetchEnrollments();
+    }, []);
 
     return (
         <EnrollmentContext.Provider
             value={{
                 enrolledCourses,
                 enrollCourse,
-                updateProgress,
-                completeLesson,
+                fetchEnrollments,
             }}
         >
             {children}

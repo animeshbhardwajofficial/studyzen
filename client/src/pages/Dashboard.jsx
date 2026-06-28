@@ -1,4 +1,8 @@
-import { useContext } from "react";
+import {
+    useContext,
+    useEffect,
+} from "react";
+
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -6,22 +10,31 @@ import {
 } from "../context/EnrollmentContext";
 
 function Dashboard() {
-    const navigate = useNavigate();
+    const navigate =
+        useNavigate();
 
     const {
         enrolledCourses,
-        updateProgress,
+        fetchEnrollments,
     } = useContext(
         EnrollmentContext
     );
 
+    useEffect(() => {
+        fetchEnrollments();
+    }, []);
+
     return (
         <div className="dashboard">
-            <h1>My Learning Dashboard</h1>
+            <h1>
+                My Learning Dashboard
+            </h1>
 
-            {enrolledCourses.length === 0 ? (
+            {enrolledCourses.length ===
+                0 ? (
                 <p>
-                    No enrolled courses yet.
+                    No enrolled courses
+                    yet.
                 </p>
             ) : (
                 enrolledCourses.map(
@@ -30,63 +43,71 @@ function Dashboard() {
                             key={course.id}
                             className="course-card"
                         >
+                            <img
+                                src={
+                                    course.thumbnail
+                                }
+                                alt={
+                                    course.title
+                                }
+                                className="course-card-image"
+                            />
+
                             <h2>
-                                {course.title}
+                                {
+                                    course.title
+                                }
                             </h2>
 
                             <p>
-                                By {course.instructor}
+                                By{" "}
+                                {
+                                    course.instructor
+                                }
                             </p>
 
                             <p>
-                                Progress:
-                                {" "}
-                                {course.progress}%
+                                ⭐{" "}
+                                {
+                                    course.rating
+                                }
                             </p>
 
-                            <input
-                                type="range"
-                                min="0"
-                                max="100"
-                                value={course.progress}
-                                onChange={(e) =>
-                                    updateProgress(
-                                        course.id,
-                                        Number(
-                                            e.target.value
+                            <p>
+                                👨‍🎓{" "}
+                                {
+                                    course.students
+                                }
+                            </p>
+
+                            <p>
+                                ⏱{" "}
+                                {
+                                    course.duration
+                                }
+                            </p>
+
+                            <div className="course-card-actions">
+                                <button
+                                    onClick={() =>
+                                        navigate(
+                                            `/course/${course.id}`
                                         )
-                                    )
-                                }
-                            />
+                                    }
+                                >
+                                    View
+                                </button>
 
-                            <br />
-
-                            <button
-                                onClick={() =>
-                                    navigate(
-                                        `/course/${course.id}`
-                                    )
-                                }
-                            >
-                                View Course
-                            </button>
-
-                            <button
-                                onClick={() =>
-                                    navigate(
-                                        `/course/${course.id}/lesson/1`
-                                    )
-                                }
-                            >
-                                Continue Learning
-                            </button>
-
-                            {course.progress ===
-                                100 && (
-                                    <p>
-                                        ✅ Completed
-                                    </p>
-                                )}
+                                <button
+                                    onClick={() =>
+                                        navigate(
+                                            `/course/${course.id}/lesson/1`
+                                        )
+                                    }
+                                >
+                                    Continue
+                                </button>
+                            </div>
                         </div>
                     )
                 )
