@@ -1,6 +1,7 @@
 import {
     createContext,
     useEffect,
+    useMemo,
     useState,
 } from "react";
 
@@ -76,16 +77,21 @@ function AuthProvider({
         setToken(null);
     }
 
+    const value = useMemo(
+        () => ({
+            user,
+            token,
+            login,
+            logout,
+            isLoggedIn:
+                !!token,
+        }),
+        [user, token]
+    );
+
     return (
         <AuthContext.Provider
-            value={{
-                user,
-                token,
-                login,
-                logout,
-                isLoggedIn:
-                    !!token,
-            }}
+            value={value}
         >
             {children}
         </AuthContext.Provider>

@@ -1,15 +1,28 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import {
+    useContext,
+    useEffect,
+    useState,
+} from "react";
+
+import {
+    useNavigate,
+    useParams,
+} from "react-router-dom";
+
+import {
+    getCourseById,
+} from "../api/courseApi";
 
 import {
     EnrollmentContext,
 } from "../context/EnrollmentContext";
 
 function CourseDetails() {
-    const { id } = useParams();
+    const { id } =
+        useParams();
 
-    const navigate = useNavigate();
+    const navigate =
+        useNavigate();
 
     const [course, setCourse] =
         useState(null);
@@ -28,12 +41,12 @@ function CourseDetails() {
         async function fetchCourse() {
             try {
                 const response =
-                    await axios.get(
-                        `http://localhost:5000/api/courses/${id}`
+                    await getCourseById(
+                        id
                     );
 
                 setCourse(
-                    response.data.data
+                    response.data
                 );
             } catch (error) {
                 console.log(error);
@@ -46,7 +59,11 @@ function CourseDetails() {
     }, [id]);
 
     if (loading) {
-        return <h1>Loading...</h1>;
+        return (
+            <h1>
+                Loading...
+            </h1>
+        );
     }
 
     if (!course) {
@@ -59,7 +76,9 @@ function CourseDetails() {
 
     const isEnrolled =
         enrolledCourses.some(
-            (enrolledCourse) =>
+            (
+                enrolledCourse
+            ) =>
                 enrolledCourse.id ===
                 course.id
         );
@@ -67,49 +86,80 @@ function CourseDetails() {
     return (
         <section className="course-details">
             <img
-                src={course.thumbnail}
-                alt={course.title}
+                src={
+                    course.thumbnail
+                }
+                alt={
+                    course.title
+                }
                 className="course-thumbnail"
             />
 
             <div className="course-info">
-                <h1>{course.title}</h1>
+                <h1>
+                    {course.title}
+                </h1>
 
                 <p>
-                    By {course.instructor}
+                    By{" "}
+                    {
+                        course.instructor
+                    }
                 </p>
 
                 <p>
-                    ⭐ {course.rating}
+                    ⭐{" "}
+                    {
+                        course.rating
+                    }
                 </p>
 
                 <p>
-                    👨‍🎓 {course.students} Students
+                    👨‍🎓{" "}
+                    {
+                        course.students
+                    }{" "}
+                    Students
                 </p>
 
                 <p>
-                    ⏱ {course.duration}
+                    ⏱{" "}
+                    {
+                        course.duration
+                    }
                 </p>
 
                 <p>
-                    📚 {course.lessons.length} Lessons
+                    📚{" "}
+                    {
+                        course
+                            .lessons
+                            .length
+                    }{" "}
+                    Lessons
                 </p>
 
                 <p>
-                    {course.description}
+                    {
+                        course.description
+                    }
                 </p>
 
                 {!isEnrolled ? (
                     <button
                         onClick={() =>
-                            enrollCourse(course)
+                            enrollCourse(
+                                course
+                            )
                         }
                     >
-                        Enroll Now
+                        Enroll
+                        Now
                     </button>
                 ) : (
                     <button disabled>
-                        ✅ Enrolled
+                        ✅
+                        Enrolled
                     </button>
                 )}
 
@@ -120,16 +170,23 @@ function CourseDetails() {
                         )
                     }
                 >
-                    Continue Learning
+                    Continue
+                    Learning
                 </button>
 
-                <h2>Curriculum</h2>
+                <h2>
+                    Curriculum
+                </h2>
 
                 <ul>
                     {course.lessons.map(
-                        (lesson) => (
+                        (
+                            lesson
+                        ) => (
                             <li
-                                key={lesson.id}
+                                key={
+                                    lesson.id
+                                }
                                 onClick={() =>
                                     navigate(
                                         `/course/${course.id}/lesson/${lesson.id}`
@@ -140,7 +197,9 @@ function CourseDetails() {
                                         "pointer",
                                 }}
                             >
-                                {lesson.title}
+                                {
+                                    lesson.title
+                                }
                             </li>
                         )
                     )}

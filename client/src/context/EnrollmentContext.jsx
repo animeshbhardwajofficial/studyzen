@@ -1,10 +1,18 @@
 import {
     createContext,
+    useContext,
     useEffect,
     useState,
 } from "react";
 
-import axios from "axios";
+import {
+    AuthContext,
+} from "./AuthContext";
+
+import {
+    enrollCourse as enrollCourseApi,
+    getEnrollments,
+} from "../api/enrollmentApi";
 
 export const EnrollmentContext =
     createContext();
@@ -12,38 +20,34 @@ export const EnrollmentContext =
 function EnrollmentProvider({
     children,
 }) {
+    const {
+        token,
+    } = useContext(
+        AuthContext
+    );
+
     const [
         enrolledCourses,
         setEnrolledCourses,
     ] = useState([]);
 
     async function fetchEnrollments() {
+        if (!token) {
+            setEnrolledCourses(
+                []
+            );
+            return;
+        }
+
         try {
-            const token =
-                localStorage.getItem(
-                    "token"
-                );
-
-            if (!token) {
-                setEnrolledCourses(
-                    []
-                );
-                return;
-            }
-
             const response =
-                await axios.get(
-                    "http://localhost:5000/api/enrollments",
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                await getEnrollments();
 
             const courses =
-                response.data.data.map(
-                    (enrollment) =>
+                response.data.map(
+                    (
+                        enrollment
+                    ) =>
                         enrollment.course
                 );
 
@@ -58,30 +62,16 @@ function EnrollmentProvider({
     async function enrollCourse(
         course
     ) {
+        if (!token) {
+            alert(
+                "Please login first."
+            );
+            return;
+        }
+
         try {
-            const token =
-                localStorage.getItem(
-                    "token"
-                );
-
-            if (!token) {
-                alert(
-                    "Please login first."
-                );
-                return;
-            }
-
-            await axios.post(
-                "http://localhost:5000/api/enrollments",
-                {
-                    courseId:
-                        course.id,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
+            await enrollCourseApi(
+                course.id
             );
 
             await fetchEnrollments();
@@ -98,7 +88,7 @@ function EnrollmentProvider({
 
     useEffect(() => {
         fetchEnrollments();
-    }, []);
+    }, [token]);
 
     return (
         <EnrollmentContext.Provider
