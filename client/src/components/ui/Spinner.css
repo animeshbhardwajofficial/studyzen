@@ -1,0 +1,80 @@
+.spinner {
+
+    position: relative;
+
+    display: inline-block;
+
+    color: currentColor;
+
+}
+
+.spinner-sm {
+
+    width: 16px;
+
+    height: 16px;
+
+}
+
+.spinner-md {
+
+    width: 20px;
+
+    height: 20px;
+
+}
+
+.spinner-lg {
+
+    width: 28px;
+
+    height: 28px;
+
+}
+
+.spinner-blade {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 10%;
+
+    height: 30%;
+
+    border-radius: 999px;
+
+    background: currentColor;
+
+    opacity: .15;
+
+    transform-origin: center calc(100% + 4px);
+
+    transform:
+        translate(-50%, -100%) rotate(calc(var(--i) * 30deg));
+
+    animation:
+        spinnerFade 1s linear infinite;
+
+    animation-delay:
+        calc(var(--i) * 0.083333s);
+
+}
+
+@keyframes spinnerFade {
+
+    0% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: .15;
+
+    }
+
+}

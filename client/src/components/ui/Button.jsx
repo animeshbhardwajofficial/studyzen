@@ -1,3 +1,5 @@
+import Spinner from "./Spinner";
+
 import "./Button.css";
 
 function Button({
@@ -6,13 +8,17 @@ function Button({
     size = "md",
     fullWidth = false,
     disabled = false,
+    loading = false,
     onClick,
     type = "button",
 }) {
     return (
         <button
             type={type}
-            disabled={disabled}
+            disabled={
+                disabled ||
+                loading
+            }
             onClick={onClick}
             className={`
                 btn
@@ -22,9 +28,38 @@ function Button({
                     ? "btn-full"
                     : ""
                 }
+                ${loading
+                    ? "btn-loading"
+                    : ""
+                }
             `}
         >
-            {children}
+            <span
+                className={`
+                    btn-content
+                    ${loading
+                        ? "btn-content-hidden"
+                        : ""
+                    }
+                `}
+            >
+                {children}
+            </span>
+
+            {loading && (
+                <span className="btn-spinner">
+
+                    <Spinner
+                        size={
+                            size ===
+                                "sm"
+                                ? "sm"
+                                : "md"
+                        }
+                    />
+
+                </span>
+            )}
         </button>
     );
 }

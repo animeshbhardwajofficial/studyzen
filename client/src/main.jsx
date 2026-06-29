@@ -6,6 +6,7 @@ import "./styles/globals.css";
 
 import AuthProvider from "./context/AuthContext";
 import EnrollmentProvider from "./context/EnrollmentContext";
+import ToastProvider from "./context/ToastContext";
 
 import App from "./App.jsx";
 
@@ -13,12 +14,24 @@ createRoot(
   document.getElementById("root")
 ).render(
   <StrictMode>
+
     <BrowserRouter>
-      <AuthProvider>
-        <EnrollmentProvider>
-          <App />
-        </EnrollmentProvider>
-      </AuthProvider>
+
+      <ToastProvider>
+
+        <AuthProvider>
+
+          <EnrollmentProvider>
+
+            <App />
+
+          </EnrollmentProvider>
+
+        </AuthProvider>
+
+      </ToastProvider>
+
     </BrowserRouter>
+
   </StrictMode>
 );

@@ -1,0 +1,77 @@
+.dashboard-course-card {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap:
+        var(--space-6);
+
+    padding:
+        var(--space-6);
+
+}
+
+.dashboard-course-info {
+
+    flex: 1;
+
+}
+
+.dashboard-course-info h3 {
+
+    margin-bottom:
+        var(--space-2);
+
+}
+
+.dashboard-course-info p {
+
+    color:
+        var(--color-text-secondary);
+
+    margin-bottom:
+        var(--space-4);
+
+}
+
+.progress-text {
+
+    display: inline-block;
+
+    margin-top:
+        var(--space-2);
+
+    font-size:
+        var(--font-size-sm);
+
+    color:
+        var(--color-text-secondary);
+
+}
+
+.dashboard-course-card .btn {
+
+    white-space: nowrap;
+
+}
+
+@media (max-width:768px) {
+
+    .dashboard-course-card {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .dashboard-course-card .btn {
+
+        width: 100%;
+
+    }
+
+}

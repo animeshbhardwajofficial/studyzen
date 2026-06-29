@@ -16,6 +16,8 @@ import {
     AuthContext,
 } from "../context/AuthContext";
 
+import useToast from "../hooks/useToast";
+
 import Card from "../components/ui/Card";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
@@ -23,6 +25,9 @@ import Button from "../components/ui/Button";
 function Login() {
     const navigate =
         useNavigate();
+
+    const toast =
+        useToast();
 
     const {
         login,
@@ -52,7 +57,7 @@ function Login() {
             !email ||
             !password
         ) {
-            alert(
+            toast.error(
                 "Please fill all fields."
             );
             return;
@@ -72,18 +77,18 @@ function Login() {
                 response.token
             );
 
-            alert(
-                "Login Successful"
+            toast.success(
+                "Welcome back!"
             );
 
             navigate(
                 "/dashboard"
             );
         } catch (error) {
-            alert(
+            toast.error(
                 error.response?.data
                     ?.message ||
-                "Login Failed"
+                "Login failed."
             );
         } finally {
             setLoading(false);
@@ -92,10 +97,12 @@ function Login() {
 
     return (
         <main className="auth-page">
+
             <Card
                 hover={false}
                 className="auth-card"
             >
+
                 <h1>
                     Welcome Back
                 </h1>
@@ -110,6 +117,7 @@ function Login() {
                         handleSubmit
                     }
                 >
+
                     <Input
                         label="Email"
                         type="email"
@@ -117,8 +125,7 @@ function Login() {
                         value={email}
                         onChange={(e) =>
                             setEmail(
-                                e.target
-                                    .value
+                                e.target.value
                             )
                         }
                     />
@@ -127,13 +134,10 @@ function Login() {
                         label="Password"
                         type="password"
                         placeholder="••••••••"
-                        value={
-                            password
-                        }
+                        value={password}
                         onChange={(e) =>
                             setPassword(
-                                e.target
-                                    .value
+                                e.target.value
                             )
                         }
                     />
@@ -141,14 +145,11 @@ function Login() {
                     <Button
                         type="submit"
                         fullWidth
-                        disabled={
-                            loading
-                        }
+                        loading={loading}
                     >
-                        {loading
-                            ? "Logging in..."
-                            : "Login"}
+                        Login
                     </Button>
+
                 </form>
 
                 <p
@@ -167,7 +168,9 @@ function Login() {
                         Create one
                     </Link>
                 </p>
+
             </Card>
+
         </main>
     );
 }

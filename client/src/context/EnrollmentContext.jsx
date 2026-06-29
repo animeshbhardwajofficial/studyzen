@@ -31,15 +31,21 @@ function EnrollmentProvider({
         setEnrolledCourses,
     ] = useState([]);
 
-    async function fetchEnrollments() {
+    const [
+        loading,
+        setLoading,
+    ] = useState(true);
+
+    async function refreshEnrollments() {
         if (!token) {
-            setEnrolledCourses(
-                []
-            );
+            setEnrolledCourses([]);
+            setLoading(false);
             return;
         }
 
         try {
+            setLoading(true);
+
             const response =
                 await getEnrollments();
 
@@ -56,6 +62,8 @@ function EnrollmentProvider({
             );
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -74,7 +82,7 @@ function EnrollmentProvider({
                 course.id
             );
 
-            await fetchEnrollments();
+            await refreshEnrollments();
         } catch (error) {
             console.log(error);
 
@@ -87,15 +95,16 @@ function EnrollmentProvider({
     }
 
     useEffect(() => {
-        fetchEnrollments();
+        refreshEnrollments();
     }, [token]);
 
     return (
         <EnrollmentContext.Provider
             value={{
                 enrolledCourses,
+                loading,
                 enrollCourse,
-                fetchEnrollments,
+                refreshEnrollments,
             }}
         >
             {children}

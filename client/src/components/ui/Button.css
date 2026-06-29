@@ -1,11 +1,15 @@
 .btn {
+
+    position: relative;
+
     display: inline-flex;
 
     align-items: center;
 
     justify-content: center;
 
-    gap: var(--space-2);
+    gap:
+        var(--space-2);
 
     border: none;
 
@@ -17,7 +21,9 @@
 
     cursor: pointer;
 
-    transition: all var(--transition-normal);
+    transition:
+        all var(--transition-normal);
+
 }
 
 /*=========================
@@ -25,27 +31,33 @@
 =========================*/
 
 .btn-sm {
+
     padding:
-        10px 18px;
+        7px 18px;
 
     font-size:
         var(--font-size-sm);
+
 }
 
 .btn-md {
+
     padding:
-        14px 26px;
+        10px 26px;
 
     font-size:
         var(--font-size-md);
+
 }
 
 .btn-lg {
+
     padding:
-        18px 34px;
+        12px 34px;
 
     font-size:
         var(--font-size-lg);
+
 }
 
 /*=========================
@@ -53,16 +65,20 @@
 =========================*/
 
 .btn-primary {
+
     background:
         var(--color-primary);
 
-    color: white;
+    color:
+        white;
 
     box-shadow:
         var(--shadow-sm);
+
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
+
     background:
         var(--color-primary-hover);
 
@@ -71,9 +87,11 @@
 
     transform:
         translateY(-2px);
+
 }
 
 .btn-secondary {
+
     background:
         var(--color-surface);
 
@@ -82,39 +100,51 @@
 
     border:
         1px solid var(--color-border);
+
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
+
     background:
         #f2f2f2;
+
 }
 
 .btn-danger {
+
     background:
         var(--color-danger);
 
-    color: white;
+    color:
+        white;
+
 }
 
-.btn-danger:hover {
+.btn-danger:hover:not(:disabled) {
+
     filter:
         brightness(.95);
+
 }
 
 .btn-ghost {
+
     background:
         transparent;
 
     color:
         var(--color-primary);
+
 }
 
-.btn-ghost:hover {
+.btn-ghost:hover:not(:disabled) {
+
     background:
         rgba(0,
             113,
             227,
             .08);
+
 }
 
 /*=========================
@@ -122,14 +152,59 @@
 =========================*/
 
 .btn:disabled {
-    opacity: .55;
+
+    opacity:
+        .75;
 
     cursor:
         not-allowed;
 
-    transform: none;
+    transform:
+        none;
+
 }
 
 .btn-full {
+
     width: 100%;
+
+}
+
+/*=========================
+=     Loading State       =
+=========================*/
+
+.btn-loading {
+
+    pointer-events: none;
+
+}
+
+.btn-content {
+
+    transition:
+        opacity .18s ease;
+
+}
+
+.btn-content-hidden {
+
+    opacity: 0;
+
+}
+
+.btn-spinner {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: currentColor;
+
 }

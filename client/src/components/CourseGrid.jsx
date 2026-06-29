@@ -8,6 +8,7 @@ import {
 } from "../api/courseApi";
 
 import CourseCard from "./CourseCard";
+import Skeleton from "./ui/Skeleton";
 
 import "./CourseGrid.css";
 
@@ -59,15 +60,102 @@ function CourseGrid() {
 
                 </div>
 
-                {loading ? (
-                    <h3>
-                        Loading
-                        courses...
-                    </h3>
-                ) : (
-                    <div className="course-grid">
+                <div className="course-grid">
 
-                        {courses.map(
+                    {loading
+                        ? Array.from({
+                            length: 6,
+                        }).map(
+                            (_, index) => (
+                                <div
+                                    key={
+                                        index
+                                    }
+                                    className="course-card"
+                                >
+                                    <Skeleton
+                                        height="220px"
+                                        radius="24px"
+                                    />
+
+                                    <div
+                                        style={{
+                                            padding:
+                                                "24px",
+                                        }}
+                                    >
+                                        <Skeleton
+                                            width="90px"
+                                            height="28px"
+                                            radius="999px"
+                                        />
+
+                                        <div
+                                            style={{
+                                                height:
+                                                    "18px",
+                                            }}
+                                        />
+
+                                        <Skeleton
+                                            width="75%"
+                                            height="34px"
+                                        />
+
+                                        <div
+                                            style={{
+                                                height:
+                                                    "14px",
+                                            }}
+                                        />
+
+                                        <Skeleton
+                                            width="45%"
+                                        />
+
+                                        <div
+                                            style={{
+                                                height:
+                                                    "22px",
+                                            }}
+                                        />
+
+                                        <Skeleton
+                                            width="100%"
+                                            height="14px"
+                                        />
+
+                                        <div
+                                            style={{
+                                                height:
+                                                    "10px",
+                                            }}
+                                        />
+
+                                        <Skeleton
+                                            width="80%"
+                                            height="14px"
+                                        />
+
+                                        <div
+                                            style={{
+                                                height:
+                                                    "28px",
+                                            }}
+                                        />
+
+                                        <Skeleton
+                                            width="120px"
+                                            height="42px"
+                                            radius="999px"
+                                        />
+
+                                    </div>
+
+                                </div>
+                            )
+                        )
+                        : courses.map(
                             (
                                 course
                             ) => (
@@ -80,8 +168,7 @@ function CourseGrid() {
                             )
                         )}
 
-                    </div>
-                )}
+                </div>
 
             </div>
 
