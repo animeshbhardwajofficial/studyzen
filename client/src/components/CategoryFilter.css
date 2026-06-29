@@ -1,0 +1,62 @@
+.category-filter {
+
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 14px;
+
+}
+
+.category-filter button {
+
+    padding:
+        12px 22px;
+
+    border: none;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(0, 0, 0, .05);
+
+    color:
+        var(--color-text-secondary);
+
+    font-size:
+        .95rem;
+
+    font-weight:
+        600;
+
+    cursor: pointer;
+
+    transition:
+        .25s;
+
+}
+
+.category-filter button:hover {
+
+    background:
+        rgba(0, 113, 227, .08);
+
+    color:
+        var(--color-primary);
+
+}
+
+.category-filter button.active {
+
+    background:
+        var(--color-primary);
+
+    color: white;
+
+    box-shadow:
+        0 8px 24px rgba(0, 113, 227, .22);
+
+}

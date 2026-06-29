@@ -22,3 +22,27 @@ export async function enrollCourse(
 
     return response.data;
 }
+
+export async function getLessonProgress() {
+    const response =
+        await api.get(
+            "/lesson-progress"
+        );
+
+    return response.data;
+}
+
+export async function updateLessonProgress(
+    lessonId,
+    progressPercent
+) {
+    const response =
+        await api.patch(
+            `/lesson-progress/${lessonId}`,
+            {
+                progressPercent,
+            }
+        );
+
+    return response.data;
+}

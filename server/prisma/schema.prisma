@@ -8,17 +8,18 @@ datasource db {
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
-  email       String       @unique
+  email       String   @unique
   password    String
-  createdAt   DateTime     @default(now())
+  createdAt   DateTime @default(now())
 
-  enrollments Enrollment[]
+  enrollments    Enrollment[]
+  lessonProgress LessonProgress[]
 }
 
 model Course {
-  id           Int          @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
 
   title        String
   instructor   String
@@ -30,36 +31,69 @@ model Course {
   duration     String
   description  String
 
-  createdAt    DateTime     @default(now())
+  createdAt    DateTime @default(now())
 
   lessons      Lesson[]
   enrollments  Enrollment[]
 }
 
 model Lesson {
-  id         Int      @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
 
-  title      String
+  title        String
 
-  courseId   Int
+  description  String?
 
-  course     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  videoUrl     String?
 
-  createdAt  DateTime @default(now())
+  duration     String?
+
+  order        Int?
+
+  courseId     Int
+
+  course       Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  progress     LessonProgress[]
+
+  createdAt    DateTime @default(now())
 }
 
 model Enrollment {
-  id         Int      @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
 
-  userId     Int
+  userId       Int
 
-  courseId   Int
+  courseId     Int
 
-  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  course      Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course       Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
-  createdAt   DateTime @default(now())
+  createdAt    DateTime @default(now())
 
   @@unique([userId, courseId])
+}
+
+model LessonProgress {
+  id               Int      @id @default(autoincrement())
+
+  userId           Int
+  lessonId         Int
+
+  progressPercent  Int      @default(0)
+
+  completedAt      DateTime?
+
+  lastOpenedAt     DateTime @default(now())
+
+  createdAt        DateTime @default(now())
+
+  updatedAt        DateTime @updatedAt
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  lesson           Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
 }

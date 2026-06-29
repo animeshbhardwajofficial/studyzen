@@ -12,7 +12,11 @@ import {
 import {
     enrollCourse as enrollCourseApi,
     getEnrollments,
+    getLessonProgress,
+    updateLessonProgress as updateLessonProgressApi,
 } from "../api/enrollmentApi";
+
+import useToast from "../hooks/useToast";
 
 export const EnrollmentContext =
     createContext();
@@ -20,6 +24,9 @@ export const EnrollmentContext =
 function EnrollmentProvider({
     children,
 }) {
+    const toast =
+        useToast();
+
     const {
         token,
     } = useContext(
@@ -32,6 +39,11 @@ function EnrollmentProvider({
     ] = useState([]);
 
     const [
+        lessonProgress,
+        setLessonProgress,
+    ] = useState([]);
+
+    const [
         loading,
         setLoading,
     ] = useState(true);
@@ -39,6 +51,7 @@ function EnrollmentProvider({
     async function refreshEnrollments() {
         if (!token) {
             setEnrolledCourses([]);
+            setLessonProgress([]);
             setLoading(false);
             return;
         }
@@ -46,11 +59,16 @@ function EnrollmentProvider({
         try {
             setLoading(true);
 
-            const response =
-                await getEnrollments();
+            const [
+                enrollmentResponse,
+                progressResponse,
+            ] = await Promise.all([
+                getEnrollments(),
+                getLessonProgress(),
+            ]);
 
             const courses =
-                response.data.map(
+                enrollmentResponse.data.map(
                     (
                         enrollment
                     ) =>
@@ -60,8 +78,16 @@ function EnrollmentProvider({
             setEnrolledCourses(
                 courses
             );
+
+            setLessonProgress(
+                progressResponse.data
+            );
         } catch (error) {
-            console.log(error);
+            console.error(error);
+
+            toast.error(
+                "Failed to load your learning data."
+            );
         } finally {
             setLoading(false);
         }
@@ -71,7 +97,7 @@ function EnrollmentProvider({
         course
     ) {
         if (!token) {
-            alert(
+            toast.info(
                 "Please login first."
             );
             return;
@@ -83,13 +109,43 @@ function EnrollmentProvider({
             );
 
             await refreshEnrollments();
-        } catch (error) {
-            console.log(error);
 
-            alert(
+            toast.success(
+                "Course enrolled successfully!"
+            );
+        } catch (error) {
+            console.error(error);
+
+            toast.error(
                 error.response?.data
                     ?.message ||
-                "Enrollment Failed"
+                "Enrollment failed."
+            );
+        }
+    }
+
+    async function updateLessonProgress(
+        lessonId,
+        progressPercent
+    ) {
+        if (!token) {
+            return;
+        }
+
+        try {
+            await updateLessonProgressApi(
+                lessonId,
+                progressPercent
+            );
+
+            await refreshEnrollments();
+        } catch (error) {
+            console.error(error);
+
+            toast.error(
+                error.response?.data
+                    ?.message ||
+                "Failed to update lesson progress."
             );
         }
     }
@@ -102,9 +158,11 @@ function EnrollmentProvider({
         <EnrollmentContext.Provider
             value={{
                 enrolledCourses,
+                lessonProgress,
                 loading,
                 enrollCourse,
                 refreshEnrollments,
+                updateLessonProgress,
             }}
         >
             {children}

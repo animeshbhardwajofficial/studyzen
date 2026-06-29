@@ -1,8 +1,18 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import axios from "axios";
+
+import {
+  Search,
+} from "lucide-react";
 
 import CourseCard from "../components/CourseCard";
 import CategoryFilter from "../components/CategoryFilter";
+
+import "./Courses.css";
 
 function Courses() {
   const [courses, setCourses] =
@@ -17,112 +27,116 @@ function Courses() {
   ] = useState("All");
 
   useEffect(() => {
-    const fetchCourses =
-      async () => {
-        try {
-          const response =
-            await axios.get(
-              "http://localhost:5000/api/courses"
-            );
-
-          setCourses(
-            response.data.data
+    async function fetchCourses() {
+      try {
+        const response =
+          await axios.get(
+            "http://localhost:5000/api/courses"
           );
-        } catch (error) {
-          console.log(error);
-        }
-      };
+
+        setCourses(
+          response.data.data
+        );
+      } catch (error) {
+        console.error(
+          error
+        );
+      }
+    }
 
     fetchCourses();
   }, []);
 
   const filteredCourses =
-    courses.filter((course) => {
-      const matchesSearch =
-        course.title
-          .toLowerCase()
-          .includes(
-            search.toLowerCase()
-          );
+    courses.filter(
+      (course) => {
+        const matchesSearch =
+          course.title
+            .toLowerCase()
+            .includes(
+              search.toLowerCase()
+            );
 
-      const matchesCategory =
-        selectedCategory ===
+        const matchesCategory =
+          selectedCategory ===
           "All" ||
-        course.category ===
+          course.category ===
           selectedCategory;
 
-      return (
-        matchesSearch &&
-        matchesCategory
-      );
-    });
+        return (
+          matchesSearch &&
+          matchesCategory
+        );
+      }
+    );
 
   return (
-    <>
-      <h1
-        style={{
-          textAlign: "center",
-          marginTop: "2rem",
-        }}
-      >
-        All Courses
-      </h1>
+    <main className="courses-page">
 
-      <input
-        type="text"
-        placeholder="Search Courses..."
-        value={search}
-        onChange={(e) =>
-          setSearch(
-            e.target.value
-          )
-        }
-      />
+      <section className="courses-hero">
 
-      <CategoryFilter
-        selectedCategory={
-          selectedCategory
-        }
-        setSelectedCategory={
-          setSelectedCategory
-        }
-      />
+        <h1>
+          Explore Courses
+        </h1>
 
-      <div className="course-grid">
+        <p>
+          Discover beautifully
+          crafted courses and
+          continue your learning
+          journey with StudyZen.
+        </p>
+
+      </section>
+
+      <section className="courses-toolbar">
+
+        <div className="courses-search">
+
+          <Search
+            className="courses-search-icon"
+            size={20}
+          />
+
+          <input
+            type="text"
+            placeholder="Search courses..."
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+          />
+
+        </div>
+
+        <CategoryFilter
+          selectedCategory={
+            selectedCategory
+          }
+          setSelectedCategory={
+            setSelectedCategory
+          }
+        />
+
+      </section>
+
+      <section className="course-grid">
+
         {filteredCourses.map(
-          (course) => (
+          (
+            course
+          ) => (
             <CourseCard
-              key={course.id}
-              id={course.id}
-              title={
-                course.title
+              key={
+                course.id
               }
-              instructor={
-                course.instructor
-              }
-              price={
-                course.price
-              }
-              rating={
-                course.rating
-              }
-              category={
-                course.category
-              }
-              students={
-                course.students
-              }
-              duration={
-                course.duration
-              }
-              thumbnail={
-                course.thumbnail
-              }
+              {...course}
             />
           )
         )}
-      </div>
-    </>
+
+      </section>
+
+    </main>
   );
 }
 

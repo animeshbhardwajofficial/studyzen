@@ -25,7 +25,7 @@ exports.enrollCourse = async (
             return res.status(400).json({
                 success: false,
                 message:
-                    "Already enrolled",
+                    "Already enrolled.",
             });
         }
 
@@ -37,14 +37,14 @@ exports.enrollCourse = async (
                 },
             });
 
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             data: enrollment,
         });
     } catch (error) {
-        console.log(error);
+        console.error(error);
 
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message:
                 "Internal Server Error",
@@ -66,23 +66,120 @@ exports.getUserEnrollments =
                     where: {
                         userId,
                     },
+
                     include: {
                         course: {
                             include: {
-                                lessons: true,
+                                lessons: {
+                                    orderBy:
+                                    {
+                                        order:
+                                            "asc",
+                                    },
+                                },
                             },
                         },
                     },
                 });
 
-            res.status(200).json({
+            const progress =
+                await prisma.lessonProgress.findMany({
+                    where: {
+                        userId,
+                    },
+                });
+
+            const progressMap =
+                new Map();
+
+            progress.forEach(
+                (item) => {
+                    progressMap.set(
+                        item.lessonId,
+                        item
+                    );
+                }
+            );
+
+            const result =
+                enrollments.map(
+                    (
+                        enrollment
+                    ) => {
+                        const totalLessons =
+                            enrollment
+                                .course
+                                .lessons
+                                .length;
+
+                        let completedLessons = 0;
+
+                        const lessons =
+                            enrollment.course.lessons.map(
+                                (
+                                    lesson
+                                ) => {
+                                    const lessonProgress =
+                                        progressMap.get(
+                                            lesson.id
+                                        );
+
+                                    if (
+                                        lessonProgress?.progressPercent ===
+                                        100
+                                    ) {
+                                        completedLessons++;
+                                    }
+
+                                    return {
+                                        ...lesson,
+
+                                        progress:
+                                            lessonProgress ||
+                                            {
+                                                progressPercent: 0,
+                                                completedAt: null,
+                                            },
+                                    };
+                                }
+                            );
+
+                        const courseProgress =
+                            totalLessons ===
+                                0
+                                ? 0
+                                : Math.round(
+                                    (completedLessons /
+                                        totalLessons) *
+                                    100
+                                );
+
+                        return {
+                            ...enrollment,
+
+                            course: {
+                                ...enrollment.course,
+
+                                lessons,
+
+                                totalLessons,
+
+                                completedLessons,
+
+                                courseProgress,
+                            },
+                        };
+                    }
+                );
+
+            return res.status(200).json({
                 success: true,
-                data: enrollments,
+                data: result,
             });
         } catch (error) {
-            console.log(error);
+            console.error(error);
 
-            res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message:
                     "Internal Server Error",

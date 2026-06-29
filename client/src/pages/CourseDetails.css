@@ -1,0 +1,192 @@
+.course-details-page {
+
+    padding:
+        72px 0;
+
+}
+
+.course-details-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1.3fr .9fr;
+
+    gap:
+        48px;
+
+    align-items:
+        start;
+
+}
+
+.course-image {
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    object-fit: cover;
+
+    border-radius:
+        var(--radius-xl);
+
+    box-shadow:
+        var(--shadow-lg);
+
+}
+
+.course-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap:
+        28px;
+
+}
+
+.course-category {
+
+    display: inline-flex;
+
+    align-self: flex-start;
+
+    padding:
+        6px 14px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(0,
+            113,
+            227,
+            .08);
+
+    color:
+        var(--color-primary);
+
+    font-size:
+        var(--font-size-sm);
+
+    font-weight:
+        var(--font-weight-semibold);
+
+}
+
+.course-title {
+
+    font-size:
+        clamp(2rem,
+            4vw,
+            3rem);
+
+    line-height:
+        1.1;
+
+}
+
+.course-description {
+
+    color:
+        var(--color-text-secondary);
+
+    line-height:
+        1.75;
+
+}
+
+.course-meta {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,
+            1fr);
+
+    gap:
+        16px;
+
+}
+
+.course-meta-card {
+
+    padding:
+        18px;
+
+}
+
+.course-actions {
+
+    display: flex;
+
+    gap:
+        16px;
+
+    flex-wrap:
+        wrap;
+
+}
+
+.curriculum {
+
+    margin-top:
+        72px;
+
+}
+
+.curriculum-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap:
+        16px;
+
+    margin-top:
+        32px;
+
+}
+
+.lesson-card {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+}
+
+.lesson-title {
+
+    font-weight:
+        600;
+
+}
+
+.lesson-index {
+
+    color:
+        var(--color-primary);
+
+    font-weight:
+        700;
+
+}
+
+@media (max-width:900px) {
+
+    .course-details-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}

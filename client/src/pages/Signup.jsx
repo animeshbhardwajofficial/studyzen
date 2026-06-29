@@ -11,6 +11,8 @@ import {
     signup,
 } from "../api/authApi";
 
+import useToast from "../hooks/useToast";
+
 import Card from "../components/ui/Card";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
@@ -18,6 +20,9 @@ import Button from "../components/ui/Button";
 function Signup() {
     const navigate =
         useNavigate();
+
+    const toast =
+        useToast();
 
     const [name, setName] =
         useState("");
@@ -45,7 +50,7 @@ function Signup() {
             !email ||
             !password
         ) {
-            alert(
+            toast.error(
                 "Please fill all fields."
             );
             return;
@@ -60,16 +65,16 @@ function Signup() {
                 password,
             });
 
-            alert(
+            toast.success(
                 "Account created successfully."
             );
 
             navigate("/login");
         } catch (error) {
-            alert(
+            toast.error(
                 error.response?.data
                     ?.message ||
-                "Signup Failed"
+                "Signup failed."
             );
         } finally {
             setLoading(false);
@@ -78,11 +83,15 @@ function Signup() {
 
     return (
         <main className="auth-page">
+
             <Card
                 hover={false}
                 className="auth-card"
             >
-                <h1>Create Account</h1>
+
+                <h1>
+                    Create Account
+                </h1>
 
                 <p>
                     Start your
@@ -95,14 +104,14 @@ function Signup() {
                         handleSubmit
                     }
                 >
+
                     <Input
                         label="Full Name"
                         placeholder="John Doe"
                         value={name}
                         onChange={(e) =>
                             setName(
-                                e.target
-                                    .value
+                                e.target.value
                             )
                         }
                     />
@@ -114,8 +123,7 @@ function Signup() {
                         value={email}
                         onChange={(e) =>
                             setEmail(
-                                e.target
-                                    .value
+                                e.target.value
                             )
                         }
                     />
@@ -124,13 +132,10 @@ function Signup() {
                         label="Password"
                         type="password"
                         placeholder="••••••••"
-                        value={
-                            password
-                        }
+                        value={password}
                         onChange={(e) =>
                             setPassword(
-                                e.target
-                                    .value
+                                e.target.value
                             )
                         }
                     />
@@ -138,14 +143,11 @@ function Signup() {
                     <Button
                         type="submit"
                         fullWidth
-                        disabled={
-                            loading
-                        }
+                        loading={loading}
                     >
-                        {loading
-                            ? "Creating..."
-                            : "Create Account"}
+                        Create Account
                     </Button>
+
                 </form>
 
                 <p
@@ -158,11 +160,15 @@ function Signup() {
                 >
                     Already have an
                     account?{" "}
-                    <Link to="/login">
+                    <Link
+                        to="/login"
+                    >
                         Login
                     </Link>
                 </p>
+
             </Card>
+
         </main>
     );
 }

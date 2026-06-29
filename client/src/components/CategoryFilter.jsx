@@ -1,3 +1,5 @@
+import "./CategoryFilter.css";
+
 function CategoryFilter({
     selectedCategory,
     setSelectedCategory,
@@ -11,16 +13,32 @@ function CategoryFilter({
 
     return (
         <div className="category-filter">
-            {categories.map((category) => (
-                <button
-                    key={category}
-                    onClick={() =>
-                        setSelectedCategory(category)
-                    }
-                >
-                    {category}
-                </button>
-            ))}
+
+            {categories.map(
+                (category) => (
+
+                    <button
+                        key={category}
+                        className={
+                            selectedCategory ===
+                                category
+                                ? "active"
+                                : ""
+                        }
+                        onClick={() =>
+                            setSelectedCategory(
+                                category
+                            )
+                        }
+                    >
+
+                        {category}
+
+                    </button>
+
+                )
+            )}
+
         </div>
     );
 }
