@@ -61,8 +61,12 @@ function CourseCard({
         0;
 
     return (
-        <Card className="course-card">
-
+        <Card
+            className="course-card"
+            onClick={() =>
+                navigate(`/course/${id}`)
+            }
+        >
             <img
                 src={thumbnail}
                 alt={title}
@@ -191,30 +195,38 @@ function CourseCard({
                         <Button
                             variant="secondary"
                             size="sm"
-                            onClick={() =>
+                            onClick={(e) => {
+
+                                e.stopPropagation();
+
                                 navigate(
                                     `/course/${id}`
-                                )
-                            }
+                                );
+
+                            }}
                         >
                             Details
                         </Button>
 
                         <Button
                             size="sm"
-                            onClick={() =>
+                            onClick={(e) => {
+
+                                e.stopPropagation();
+
                                 navigate(
+
                                     isEnrolled
                                         ? `/course/${id}/lesson/1`
                                         : `/course/${id}`
-                                )
-                            }
-                        >
 
+                                );
+
+                            }}
+                        >
                             {isEnrolled
                                 ? "Continue"
                                 : "Learn"}
-
                         </Button>
 
                     </div>

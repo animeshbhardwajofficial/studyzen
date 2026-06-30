@@ -4,9 +4,11 @@ function Card({
     children,
     hover = true,
     className = "",
+    onClick,
 }) {
     return (
         <div
+            onClick={onClick}
             className={`
                 card
                 ${hover

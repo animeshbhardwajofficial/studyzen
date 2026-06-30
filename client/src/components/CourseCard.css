@@ -8,6 +8,27 @@
 
     flex-direction: column;
 
+    height: 100%;
+
+    cursor: pointer;
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        border-color .35s ease;
+
+}
+
+.course-card:hover {
+
+    transform:
+        translateY(-10px);
+
+    box-shadow:
+        0 30px 60px rgba(0, 0, 0, .12);
+
+    border-radius: 20px;
+
 }
 
 .course-card-image {
@@ -17,6 +38,16 @@
     aspect-ratio: 16 / 9;
 
     object-fit: cover;
+
+    transition:
+        transform .6s ease;
+
+}
+
+.course-card:hover .course-card-image {
+
+    transform:
+        scale(1.06);
 
 }
 
@@ -28,9 +59,19 @@
 
     gap: var(--space-4);
 
-    padding: var(--space-5);
+    padding: 28px;
 
     flex: 1;
+
+}
+
+.course-card h3 {
+
+    font-size: 2rem;
+
+    line-height: 1.15;
+
+    letter-spacing: -.03em;
 
 }
 
@@ -206,6 +247,10 @@
 }
 
 .course-price {
+
+    font-size: 1.45rem;
+
+    font-weight: 700;
 
     color:
         var(--color-primary);
